@@ -2866,6 +2866,11 @@ extern void decl_fini_priority_insert (tree, priority_type);
 #define DECL_IS_OPERATOR_NEW(NODE) \
   (FUNCTION_DECL_CHECK (NODE)->function_decl.operator_new_flag)
 
+/* Nonzero in a FUNCTION_DECL means this function should be treated as
+   C++ operator delete.  */
+#define DECL_IS_OPERATOR_DELETE(NODE) \
+  (FUNCTION_DECL_CHECK (NODE)->function_decl.operator_delete_flag)
+
 /* Nonzero in a FUNCTION_DECL means this function may return more
    than once.  */
 #define DECL_IS_RETURNS_TWICE(NODE) \

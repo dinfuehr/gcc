@@ -1787,7 +1787,9 @@ struct GTY(()) tree_function_decl {
   unsigned has_debug_args_flag : 1;
   unsigned tm_clone_flag : 1;
   unsigned versioned_function : 1;
-  /* No bits left.  */
+
+  unsigned operator_delete_flag : 1;
+  /* 31 bits left.  */
 };
 
 struct GTY(()) tree_translation_unit_decl {
