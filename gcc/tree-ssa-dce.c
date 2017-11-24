@@ -240,6 +240,7 @@ mark_stmt_if_obviously_necessary (gimple *stmt, bool aggressive)
 	    }
 
 	if (callee != NULL_TREE
+	    && flag_allocation_dce
 	    && DECL_IS_OPERATOR_NEW (callee))
 	  return;
 
@@ -778,7 +779,8 @@ propagate_necessity (bool aggressive)
 	     allocation function do not mark that necessary through
 	     processing the argument.  */
 	  if (gimple_call_builtin_p (stmt, BUILT_IN_FREE)
-	      || gimple_call_operator_delete_p (stmt))
+	      || (is_gimple_call (stmt)
+		  && gimple_call_operator_delete_p (as_a <gcall *> (stmt))))
 	    {
 	      tree ptr = gimple_call_arg (stmt, 0);
 	      gimple *def_stmt;
@@ -813,7 +815,7 @@ propagate_necessity (bool aggressive)
 			 when we finally decide that this stmt is necessary in
 			eliminate_unnecessary_stmts. If it should really be
 			unnecessary, a later pass can clean this up.  */
-		      if (gimple_call_operator_delete_p (stmt))
+		      if (gimple_call_operator_delete_p (as_a <gcall *> (stmt)))
 			{
 			  for (unsigned i=1; i < gimple_call_num_args (stmt); ++i)
 			    {
@@ -1305,7 +1307,8 @@ eliminate_unnecessary_stmts (void)
 	     (and thus is getting removed).  */
 	  if (gimple_plf (stmt, STMT_NECESSARY)
 	      && (gimple_call_builtin_p (stmt, BUILT_IN_FREE)
-		  || gimple_call_operator_delete_p (stmt)))
+		  || (is_gimple_call (stmt)
+		      && gimple_call_operator_delete_p (as_a <gcall *> (stmt)))))
 	    {
 	      tree ptr = gimple_call_arg (stmt, 0);
 	      if (TREE_CODE (ptr) == SSA_NAME)

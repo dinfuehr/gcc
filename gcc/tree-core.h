@@ -1723,7 +1723,9 @@ struct GTY(()) tree_decl_with_vis {
  unsigned final : 1;
  /* Belong to FUNCTION_DECL exclusively.  */
  unsigned regdecl_flag : 1;
- /* 14 unused bits. */
+ /* Belong to FUNCTION_DECL exclusively.  */
+ unsigned operator_delete_flag : 1;
+ /* 13 unused bits. */
 };
 
 struct GTY(()) tree_var_decl {
@@ -1787,9 +1789,7 @@ struct GTY(()) tree_function_decl {
   unsigned has_debug_args_flag : 1;
   unsigned tm_clone_flag : 1;
   unsigned versioned_function : 1;
-
-  unsigned operator_delete_flag : 1;
-  /* 31 bits left.  */
+  /* No bits left.  */
 };
 
 struct GTY(()) tree_translation_unit_decl {

@@ -2546,12 +2546,11 @@ gimple_builtin_call_types_compatible_p (const gimple *stmt, tree fndecl)
 /* Return true when STMT is operator new call.  */
 
 bool
-gimple_call_operator_new_p (const gimple *stmt)
+gimple_call_operator_new_p (const gcall *stmt)
 {
   tree fndecl;
 
-  if (is_gimple_call (stmt)
-      && (fndecl = gimple_call_fndecl (stmt)) != NULL_TREE)
+  if ((fndecl = gimple_call_fndecl (stmt)) != NULL_TREE)
     return DECL_IS_OPERATOR_NEW (fndecl);
   return false;
 }
@@ -2559,12 +2558,11 @@ gimple_call_operator_new_p (const gimple *stmt)
 /* Return true when STMT is operator delete call.  */
 
 bool
-gimple_call_operator_delete_p (const gimple *stmt)
+gimple_call_operator_delete_p (const gcall *stmt)
 {
   tree fndecl;
 
-  if (is_gimple_call (stmt)
-      && (fndecl = gimple_call_fndecl (stmt)) != NULL_TREE)
+  if ((fndecl = gimple_call_fndecl (stmt)) != NULL_TREE)
     return DECL_IS_OPERATOR_DELETE (fndecl);
   return false;
 }
