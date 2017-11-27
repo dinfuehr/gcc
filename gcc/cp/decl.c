@@ -4200,7 +4200,7 @@ cxx_init_decl_processing (void)
 	deltype = build_exception_variant (deltype, empty_except_spec);
 	opdel = push_cp_library_fn (DELETE_EXPR, deltype, ECF_NOTHROW);
 	DECL_IS_OPERATOR_DELETE (opdel) = 1;
-	push_cp_library_fn (VEC_DELETE_EXPR, deltype, ECF_NOTHROW);
+	opdel = push_cp_library_fn (VEC_DELETE_EXPR, deltype, ECF_NOTHROW);
 	DECL_IS_OPERATOR_DELETE (opdel) = 1;
       }
 
